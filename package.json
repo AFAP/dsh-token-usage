@@ -1,0 +1,45 @@
+{
+  "name": "dsh-token-usage",
+  "version": "0.3.0",
+  "description": "Token usage display for the DeepSeek Harness web GUI: per-session header pill plus a global daily/per-model consumption panel, rendered from the token-meter session projections and session-log usage records.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AFAP/dsh-token-usage.git"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/stats.js",
+    "lib/client.js",
+    "cordis.patch.yml"
+  ],
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "token",
+    "usage",
+    "stats",
+    "plugin"
+  ],
+  "license": "MIT"
+}

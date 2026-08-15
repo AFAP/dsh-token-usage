@@ -1,0 +1,13 @@
+# dsh-token-usage bundle patch: adds the token-usage plugin row to the web
+# profile composition. Applied as a bundle layer (dsh.bundle.patch) after
+# dsh-base and dsh-web-app, so the row lands beside the other dsh.client rows.
+#
+# The host half injects webRuntime to sample the deployment's browser-trust
+# fence authorities (same expression the connection row uses), which the
+# /api/token-stats handler applies to its own requests.
+- insert:
+    - id: token-usage
+      name: dsh-token-usage
+      inject: [webRuntime]
+      config:
+        trustedHosts: !!js ctx.webRuntime.trustedHosts
