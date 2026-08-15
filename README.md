@@ -19,6 +19,12 @@ Token 用量展示插件 for [DeepSeek Harness](https://github.com/deepseek-ai/d
 本插件**不修改任何文件**：单会话胶囊只读取 Harness 实时推送的会话投影数据；全局面板
 只**只读扫描** `$DSH_HOME\sessions` 下的会话日志（不写入、不删除、不改动任何日志）。
 
+## 效果预览
+
+| 全局消耗面板（每日消耗 · 按模型 · 按日明细） | 会话头部 Token 胶囊 |
+|:---:|:---:|
+| ![全局消耗面板](screenshot/panel.jpg) | ![会话 Token 胶囊](screenshot/pill.jpg) |
+
 ## 一键安装（GitHub）
 
 ```powershell
@@ -95,6 +101,7 @@ dsh-token-usage/               # 仓库根 = npm 包根
 ├── package.json               # dsh.bundle.patch（配置补丁层）+ dsh.client（浏览器端声明）
 ├── cordis.patch.yml           # 组合行：inject webRuntime + trustedHosts 配置
 ├── LICENSE                    # MIT
+├── screenshot/                # 效果截图（panel.jpg 全局面板 / pill.jpg 会话胶囊）
 └── lib/
     ├── index.js               # 宿主半部：/api/token-stats 路由 + zstd 帧扫描 + 聚合缓存
     ├── stats.js               # 纯聚合逻辑（无依赖，可独立测试）

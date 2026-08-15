@@ -15,6 +15,12 @@ No configuration needed.
 
 This plugin **does not modify any files**: the per-session pill only reads the session projections Harness pushes in real time; the global panel only **read-scans** the session logs under `$DSH_HOME\sessions` (no writes, no deletions, no changes to any log).
 
+## Screenshots
+
+| Global consumption panel (daily · per-model · per-day drilldown) | Session-header token pill |
+|:---:|:---:|
+| ![Global consumption panel](screenshot/panel.jpg) | ![Session token pill](screenshot/pill.jpg) |
+
 ## One-click install (GitHub)
 
 ```powershell
@@ -80,6 +86,7 @@ dsh-token-usage/               # repo root = npm package root
 ├── package.json               # dsh.bundle.patch (config patch layer) + dsh.client (browser declaration)
 ├── cordis.patch.yml           # composition row: inject webRuntime + trustedHosts config
 ├── LICENSE                    # MIT
+├── screenshot/                # screenshots (panel.jpg global panel / pill.jpg session pill)
 └── lib/
     ├── index.js               # host half: /api/token-stats route + zstd frame scan + aggregation cache
     ├── stats.js               # pure aggregation logic (no deps, independently testable)
