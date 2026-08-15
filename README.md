@@ -1,5 +1,9 @@
 # dsh-token-usage
 
+<div align="center">
+  <b>中文</b> · <a href="README.en.md">English</a>
+</div>
+
 Token 用量展示插件 for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web GUI。
 
 在 `dsh web` 中展示 Token 消耗，包含两个面：

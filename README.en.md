@@ -1,5 +1,9 @@
 # dsh-token-usage
 
+<div align="center">
+  <a href="README.md">中文</a> · <b>English</b>
+</div>
+
 A token-usage display plugin for the [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) Web GUI.
 
 It shows token consumption in `dsh web`, in two surfaces:
