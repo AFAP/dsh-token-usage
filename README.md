@@ -12,6 +12,9 @@ Token 用量展示插件 for [DeepSeek Harness](https://github.com/deepseek-ai/d
 
 无需任何配置。
 
+本插件**不修改任何文件**：单会话胶囊只读取 Harness 实时推送的会话投影数据；全局面板
+只**只读扫描** `$DSH_HOME\sessions` 下的会话日志（不写入、不删除、不改动任何日志）。
+
 ## 一键安装（GitHub）
 
 ```powershell
@@ -21,8 +24,11 @@ dsh plugin --profile web add github:AFAP/dsh-token-usage
 然后**重启 `dsh web`** 生效。
 
 > 安装后插件位于 `$DSH_HOME\profiles\web\node_modules\dsh-token-usage`（pnpm 从
-> GitHub 克隆），与源码仓库位置无关。升级：`dsh plugin --profile web update dsh-token-usage`。
-> 卸载：`dsh plugin --profile web remove dsh-token-usage`。
+> GitHub 克隆），与源码仓库位置无关。
+>
+> 升级：`dsh plugin --profile web update dsh-token-usage`
+>
+> 卸载：`dsh plugin --profile web remove dsh-token-usage`
 
 ### 从源码目录手动安装（等价验证用）
 
@@ -85,15 +91,10 @@ dsh-token-usage/               # 仓库根 = npm 包根
 ├── package.json               # dsh.bundle.patch（配置补丁层）+ dsh.client（浏览器端声明）
 ├── cordis.patch.yml           # 组合行：inject webRuntime + trustedHosts 配置
 ├── LICENSE                    # MIT
-├── lib/
-│   ├── index.js               # 宿主半部：/api/token-stats 路由 + zstd 帧扫描 + 聚合缓存
-│   ├── stats.js               # 纯聚合逻辑（无依赖，可独立测试）
-│   └── client.js              # 浏览器 bundle：单会话胶囊 + 全局面板
-└── tests/
-    ├── smoke-test.mjs         # 客户端冒烟测试（加载器契约 + 全部渲染分支）
-    ├── stats-test.mjs         # 聚合单元测试
-    ├── verify-scan.mjs        # 对真实 $DSH_HOME/sessions 的端到端扫描验证
-    └── host-test.mjs          # 宿主半部：契约 + 信任围栏 + 路由（含真实扫描）
+└── lib/
+    ├── index.js               # 宿主半部：/api/token-stats 路由 + zstd 帧扫描 + 聚合缓存
+    ├── stats.js               # 纯聚合逻辑（无依赖，可独立测试）
+    └── client.js              # 浏览器 bundle：单会话胶囊 + 全局面板
 ```
 
 ## 使用
@@ -107,25 +108,6 @@ dsh-token-usage/               # 仓库根 = npm 包根
   - 按日明细：日期 | 合计 | 输入 | 输出 | 请求 | 模型明细；
   - 打开时每 60 秒自动刷新，也可手动刷新；Esc / 点击遮罩关闭。
 - 语言跟随界面：简体中文 / English 词典均已内置。
-
-## 开发说明
-
-- `lib/client.js` 是**经典脚本**（`<script>` 标签加载），顶层只能调用
-  `window.__ModuleLoader__.load({ id, factory })`；`factory` 内可用现代 JS，
-  其 `require` 仅能解析平台 seed 模块（`react`、`react/jsx-runtime`、
-  `@deepseek-ai/cordis`、`@deepseek-ai/dsh-client-ui-slots`、
-  `@deepseek-ai/dsh-client-web-react`、`@deepseek-ai/dsh-client-ui-primitives` 等）。
-  修改后重启服务即可生效（无需构建，无 prepare 脚本）。
-- 槽位：`conversation.session.header.utilities`（list, session）与
-  `sidebar.footer.action`（list, root），契约来自 `dsh-cordis-client-runner`
-  内置槽位目录。
-- 测试：
-  ```powershell
-  node tests\smoke-test.mjs     # 客户端：加载器契约 + 渲染分支
-  node tests\stats-test.mjs     # 聚合逻辑单元测试
-  node tests\verify-scan.mjs    # 真实日志端到端扫描
-  node tests\host-test.mjs      # 宿主半部：契约 + 围栏 + 路由（真实扫描）
-  ```
 
 ## License
 
