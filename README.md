@@ -48,11 +48,7 @@ dsh plugin --profile web add "D:\path\to\dsh-token-usage"
 
 ### 验证是否加载成功
 
-1. 浏览器开发者工具控制台无 `client-modules: ... failed to compose` 报错；
-2. `http://127.0.0.1:3080/plugins/dsh-token-usage/client.js?rev=...` 返回 200；
-3. 页面源码中 `window.__DSH_BOOT__` 的 `entries` 含 `dsh-token-usage`；
-4. `http://127.0.0.1:3080/api/token-stats` 返回 JSON（含 `totals` / `byDay` / `byModel`）；
-5. 打开任意会话 → 头部右侧出现 token 胶囊；侧边栏底部出现"Token 统计"按钮。
+打开任意会话 → 头部右侧出现 token 胶囊；侧边栏底部出现"Token 统计"按钮。
 
 ## 架构与数据流
 

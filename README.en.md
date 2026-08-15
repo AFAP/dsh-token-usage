@@ -43,11 +43,7 @@ dsh plugin --profile web add "D:\path\to\dsh-token-usage"
 
 ### Verify it loaded
 
-1. Browser devtools console shows no `client-modules: ... failed to compose` error;
-2. `http://127.0.0.1:3080/plugins/dsh-token-usage/client.js?rev=...` returns 200;
-3. `window.__DSH_BOOT__` in the page source lists `dsh-token-usage` in its `entries`;
-4. `http://127.0.0.1:3080/api/token-stats` returns JSON (with `totals` / `byDay` / `byModel`);
-5. Open any session → the token pill appears in the header; the "Token stats" button appears at the bottom of the sidebar.
+Open any session → the token pill appears in the header; the "Token stats" button appears at the bottom of the sidebar.
 
 ## Architecture & data flow
 
