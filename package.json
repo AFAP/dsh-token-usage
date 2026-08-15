@@ -1,4 +1,4 @@
-﻿{
+{
   "name": "dsh-token-usage",
   "version": "0.3.1",
   "description": "Token usage display for the DeepSeek Harness web GUI: per-session header pill plus a global daily/per-model consumption panel, rendered from the token-meter session projections and session-log usage records.",
@@ -43,4 +43,3 @@
   ],
   "license": "MIT"
 }
-
