@@ -94,9 +94,9 @@ dsh-token-usage/               # repo root = npm package root
 - **Per-session pill**: `in {input} · out {output} · ctx {occupancy%}` (compact 1.2k / 3.4M format); click for the four-section breakdown (provider usage / context composition / context pressure / session stats).
 - **Global panel** (sidebar bottom → Token stats):
   - Summary cards: total / today / last 7 days / requests / sessions;
-  - Last-30-days daily bar chart (today highlighted, hover shows values);
-  - Per-model table: model | input | output | cache | total | share (with share bars);
-  - Per-day drilldown: day | total | input | output | requests | model detail;
+  - Last-30-days daily bar chart (today highlighted, hover shows values); **click a day's bar → expands that day's 24-hour usage below**;
+  - By model (collapsed by default, click to expand): model | input | output | cache | total | share — the collapsed header shows the aggregate of all models;
+  - Per-day drilldown: day | total | input | output | requests | model detail, click a day row to expand that day's models;
   - Auto-refreshes every 60s while open, manual refresh too; Esc / clicking the backdrop closes it.
 - UI language follows the interface: Simplified Chinese / English dictionaries are both built in.
 
