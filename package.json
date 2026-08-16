@@ -1,6 +1,6 @@
 {
   "name": "dsh-token-usage",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Token usage display for the DeepSeek Harness web GUI: per-session header pill plus a global daily/per-model consumption panel, rendered from the token-meter session projections and session-log usage records.",
   "type": "module",
   "main": "lib/index.js",
