@@ -98,6 +98,7 @@ dsh-token-usage/               # repo root = npm package root
   - By-model summary (collapsed by default, click to expand): model | input | output | cache | total | share — the collapsed header shows the aggregate of all models;
   - Per-day drilldown: day | total | input | output | requests | model detail, click a day row to expand that day's models;
   - Auto-refreshes every 60s while open, manual refresh too; Esc / clicking the backdrop closes it.
+- **Instant open**: aggregated data is cached locally, so the panel opens instantly and stays fast across repeated opens and dsh restarts.
 - UI language follows the interface: Simplified Chinese / English dictionaries are both built in.
 
 ## License
