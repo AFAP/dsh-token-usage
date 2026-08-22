@@ -9,3 +9,6 @@ node_modules/
 Thumbs.db
 .idea/
 .vscode/
+
+# throwaway verification scripts
+.tmp-*
