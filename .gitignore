@@ -12,3 +12,6 @@ Thumbs.db
 
 # throwaway verification scripts
 .tmp-*
+
+# plugin's own persisted aggregation cache (written at runtime, also when linked locally)
+.cache/

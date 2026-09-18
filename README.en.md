@@ -9,7 +9,7 @@ A token-usage display plugin for the [DeepSeek Harness](https://github.com/deeps
 It shows token consumption in `dsh web`, in two surfaces:
 
 1. **Per-session pill**: on the right side of the session header — current session input/output tokens and context occupancy; click for the breakdown (provider usage, context composition, context pressure, session stats).
-2. **Global consumption panel**: opened from the "Token stats" button at the bottom of the sidebar — daily totals with a last-30-days bar chart, **per-model breakdown** (input/output/cache/total/share), and a per-day drilldown table. Data comes from the session logs, aggregated on the fly; the panel auto-refreshes every 60s while open.
+2. **Global consumption panel**: opened from the "Token stats" button at the bottom of the sidebar — a yearly token-activity heatmap (GitHub-contribution style: one cell per day, grey = no usage, blue ramp = usage, ghosted = future days, year-by-year paging), **per-model breakdown** (input/output/cache/total/share), a per-day drilldown table, and the web-search sidecar call count. Data comes from the session logs, aggregated once on open; press ↻ in the header to re-read.
 
 No configuration needed.
 
@@ -67,7 +67,7 @@ dsh-token-usage (node half, lib/index.js — zero external deps, Node builtins +
                             └─ aggregated by "local day × model" → JSON
                                   │
                                   ▼  (browser fetch, same-origin)
-  GlobalStatsPanel (client half) ── summary cards + 30-day bar chart + per-model table + per-day drilldown
+  GlobalStatsPanel (client half) ── summary cards + yearly heatmap + per-model table + per-day drilldown
 ```
 
 - Log format: `dsh-session-persistence-jsonl`'s **multi-frame zstd container** (one independent frame per appended batch); this plugin ports the official frame-boundary scanner (magic/descriptor/block/checksum), decompresses each frame with `zstdDecompressSync` (built into Node 22.22+), and skips torn trailing frames left by a crash.
@@ -93,11 +93,11 @@ dsh-token-usage/               # repo root = npm package root
 
 - **Per-session pill**: `in {input} · out {output} · ctx {occupancy%}` (compact 1.2k / 3.4M format); click for the four-section breakdown (provider usage / context composition / context pressure / session stats).
 - **Global panel** (sidebar bottom → Token stats):
-  - Summary cards: total / today / last 7 days / requests / sessions;
-  - Last-30-days daily bar chart (today highlighted, hover shows values); **click a day's bar → expands that day's 24-hour usage below**;
+  - Summary cards: total / today / last 7 days / searches / requests / sessions ("searches" = web-search sidecar calls);
+  - Yearly activity heatmap (`‹ 2026 ›` pages year by year, always Jan 1 – Dec 31): grey = elapsed day with no usage, four blue levels = that day's usage, ghosted outline = days still to come; hover shows "day · tokens · searches", and **clicking a cell expands that day's 24-hour usage below**;
   - By-model summary (collapsed by default, click to expand): model | input | output | cache | total | share — the collapsed header shows the aggregate of all models;
-  - Per-day drilldown: day | total | input | output | requests | model detail, click a day row to expand that day's models;
-  - Auto-refreshes every 60s while open, manual refresh too; Esc / clicking the backdrop closes it.
+  - Per-day drilldown: day | total | input | output | searches | requests | model detail, click a day row to expand that day's models;
+  - Fetches once on open, with a manual ↻ refresh in the header; Esc / clicking the backdrop closes it.
 - **Instant open**: aggregated data is cached locally, so the panel opens instantly and stays fast across repeated opens and dsh restarts.
 - UI language follows the interface: Simplified Chinese / English dictionaries are both built in.
 
