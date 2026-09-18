@@ -19,7 +19,7 @@ This plugin **does not modify any files**: the per-session pill only reads the s
 
 | Global consumption panel (daily · per-model · per-day drilldown) | Session-header token pill |
 |:---:|:---:|
-| ![Global consumption panel](screenshot/panel.jpg) | ![Session token pill](screenshot/pill.jpg) |
+| ![Global consumption panel](screenshot/panel.png) | ![Session token pill](screenshot/pill.jpg) |
 
 ## One-click install (GitHub)
 
@@ -82,7 +82,7 @@ dsh-token-usage/               # repo root = npm package root
 ├── package.json               # dsh.bundle.patch (config patch layer) + dsh.client (browser declaration)
 ├── cordis.patch.yml           # composition row: inject webRuntime + trustedHosts config
 ├── LICENSE                    # MIT
-├── screenshot/                # screenshots (panel.jpg global panel / pill.jpg session pill)
+├── screenshot/                # screenshots (panel.png global panel / pill.jpg session pill)
 └── lib/
     ├── index.js               # host half: /api/token-stats route + zstd frame scan + aggregation cache
     ├── stats.js               # pure aggregation logic (no deps, independently testable)
