@@ -67,11 +67,12 @@ dsh-token-usage (node half, lib/index.js — zero external deps, Node builtins +
                             └─ aggregated by "local day × model" → JSON
                                   │
                                   ▼  (browser fetch, same-origin)
-  GlobalStatsPanel (client half) ── summary cards + yearly heatmap + per-model table + per-day drilldown
+  GlobalStatsPanel (client half) ── summary cards + yearly heatmap + workspace/model/session/per-day panels
 ```
 
 - Log format: `dsh-session-persistence-jsonl`'s **multi-frame zstd container** (one independent frame per appended batch); this plugin ports the official frame-boundary scanner (magic/descriptor/block/checksum), decompresses each frame with `zstdDecompressSync` (built into Node 22.22+), and skips torn trailing frames left by a crash.
 - Per-request memoization by file mtime/size: only changed session logs are re-read, so refreshes are near-instant.
+- **One log per session**: when dsh upgrades the log format it rewrites the file in place as `session.v4.jsonl.zstd` and leaves the old `session.v3.jsonl.zstd` beside it; the scan keeps only the highest version per directory (the old one is a subset of it), otherwise that history would be counted twice.
 - `/api/token-stats` is registered as an **exact route** on the webserver (it wins over the connection plugin's `/api` prefix) and applies its own browser-trust fence (loopback / trustedHosts + same-origin checks, mirroring the `/api` fence in `dsh-client-connection`), rejecting DNS rebinding and cross-site requests.
 - The host half is deliberately **dependency-free**: DSH_HOME is resolved from the environment (`$DSH_HOME` → `~/.dsh`) and no `@deepseek-ai/*` package is imported, so it loads correctly no matter how it is installed (git / registry / file: / link:).
 
@@ -95,8 +96,12 @@ dsh-token-usage/               # repo root = npm package root
 - **Global panel** (sidebar bottom → Token stats):
   - Summary cards: total / today / last 7 days / searches / requests / sessions ("searches" = web-search sidecar calls);
   - Yearly activity heatmap (`‹ 2026 ›` pages year by year, always Jan 1 – Dec 31): grey = elapsed day with no usage, four blue levels = that day's usage, ghosted outline = days still to come; hover shows "day · tokens · searches", and **clicking a cell expands that day's 24-hour usage below**;
-  - By-model summary (collapsed by default, click to expand): model | input | output | cache | total | share — the collapsed header shows the aggregate of all models;
-  - Per-day drilldown: day | total | input | output | searches | requests | model detail, click a day row to expand that day's models;
+  - Four detail panels (by workspace / by model / heaviest sessions / per-day drilldown) laid out in two columns and all expanded by default; click a panel title row to collapse or expand it (▾/▴ on the right):
+    - By workspace: workspace | sessions | requests | total | share;
+    - By model: model | input | output | cache | total | share;
+    - Heaviest sessions: session (with start date) | workspace | requests | total — hover shows models/messages/tools/span;
+    - Per-day drilldown: day | total | input | output | searches | requests | model count — click a day row to expand that day's models;
+  - All four lists stay **height-aligned**: the header is sticky, at most 12 rows are shown, and the rest scrolls inside the box (so the panels never grow taller than each other);
   - Fetches once on open, with a manual ↻ refresh in the header; Esc / clicking the backdrop closes it.
 - **Instant open**: aggregated data is cached locally, so the panel opens instantly and stays fast across repeated opens and dsh restarts.
 - UI language follows the interface: Simplified Chinese / English dictionaries are both built in.
