@@ -2,12 +2,13 @@
 # profile composition. Applied as a bundle layer (dsh.bundle.patch) after
 # dsh-base and dsh-web-app, so the row lands beside the other dsh.client rows.
 #
-# The host half injects webRuntime to sample the deployment's browser-trust
-# fence authorities (same expression the connection row uses), which the
-# /api/token-stats handler applies to its own requests.
+# No row-level inject on purpose: the deployment's trust-fence inputs live on
+# a service whose name changed across releases (`webRuntime` on dsh <= 0.2.0,
+# `webStartup` on >= 0.2.1). A static inject would make the whole row fail to
+# load on the wrong side of that rename — which is exactly what produced the
+# HTTP 404 on /api/token-stats after the 0.2.1 upgrade. The host half instead
+# resolves the fence lazily per request (see lib/index.js runtimeFence), so
+# the row loads on either generation.
 - insert:
     - id: token-usage
       name: dsh-token-usage
-      inject: [webRuntime]
-      config:
-        trustedHosts: !!js ctx.webRuntime.trustedHosts
